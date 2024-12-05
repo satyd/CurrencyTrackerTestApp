@@ -1,7 +1,8 @@
-package com.levp.currencytracker.ui.components
+package com.levp.currencytracker.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import com.levp.currencytracker.ui.theme.clMainSecondary
 @Composable
 fun CurrencySwitch(
     currencyName: String,
+    switchOnClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val shape = RoundedCornerShape(8.dp)
@@ -35,13 +37,13 @@ fun CurrencySwitch(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-
             .border(width = 1.dp, color = clMainSecondary, shape = shape)
             .height(48.dp)
             //.fillMaxWidth()
             //.width(272.dp)
             .background(color = clMainBackground, shape = shape)
             .padding(start = 16.dp, end = 16.dp)
+            .clickable { switchOnClick() }
         //
     ) {
         Text(text = currencyName)
@@ -63,7 +65,7 @@ fun CurrencySwitchPreview() {
             .background(color = clHeaderBackground),
             contentAlignment = Alignment.Center
         ) {
-            CurrencySwitch(currencyName = "USD")
+            CurrencySwitch(currencyName = "USD", {})
         }
     }
 }

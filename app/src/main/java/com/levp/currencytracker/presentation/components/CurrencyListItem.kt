@@ -1,4 +1,4 @@
-package com.levp.currencytracker.ui.components
+package com.levp.currencytracker.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

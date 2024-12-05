@@ -1,4 +1,4 @@
-package com.levp.currencytracker.ui.components
+package com.levp.currencytracker.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
-import com.levp.currencytracker.ui.theme.clListItemBackground
 import com.levp.currencytracker.ui.theme.clMainBackground
 
 //hehe fix

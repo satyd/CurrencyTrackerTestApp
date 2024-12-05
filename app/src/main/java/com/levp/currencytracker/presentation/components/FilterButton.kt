@@ -1,9 +1,9 @@
-package com.levp.currencytracker.ui.components
+package com.levp.currencytracker.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -29,7 +29,8 @@ fun FilterButton(
         modifier = Modifier
             .size(48.dp)
             .border(width = 1.dp, color = clMainSecondary, shape = shape)
-            .background(color = clMainBackground, shape = shape),
+            .background(color = clMainBackground, shape = shape)
+            .clickable { onClick() },
             //.padding(start = 16.dp, end = 16.dp),
         contentAlignment = Alignment.Center
     ) {
