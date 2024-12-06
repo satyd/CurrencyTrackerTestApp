@@ -14,6 +14,9 @@ val clListItemBackground = Color(0xFFF0F2F8)
 val clMainBackground = Color(0xFFFFFFFF)
 val clHeaderBackground = Color(0xFFF6F6F6)
 val clMainSecondary = Color(0xFF9DACDC)
+val clSelectedItem = Color(0xFFDEE4F8)
+val clDivier = Color(0xFFEBEBEB)
 
 val clText = Color(0xFF343138)
+val clTextUnselected = Color(0xFF9EA7C3)
 

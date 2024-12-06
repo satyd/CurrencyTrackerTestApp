@@ -25,22 +25,22 @@ class CurrencyRepoImpl @Inject constructor(
 
     val dao = db.dao
 
-    override suspend fun getLatestCurrencyQuotes(base: String): Flow<Resource<CurrencyQuote>> {
+    override suspend fun getLatestCurrencyQuotes(base: SupportedSymbols): Flow<Resource<CurrencyQuote>> {
         return flow {
             Log.i("hehe", "start flow for base = $base")
-            val symbols = SupportedSymbols.entries.filter { it.name != base }.map { it.name }
+            val symbols = SupportedSymbols.entries.filter { it.name != base.name }.map { it.name }
             val symbolsStr = symbols.joinToString(",")
 
             emit(Resource.Loading(true))
             val currencyQuotes = try {
                 val response = currencyApi.getLatestQuotesForSymbol(
-                    base = base,
+                    base = base.name,
                     symbols = symbolsStr
                 )
 
-                val rates = parseJson(base, response.string()).map { it.toExchangeRate() }
+                val rates = parseJson(base.name, response.string()).map { it.toExchangeRate() }
                 CurrencyQuote(
-                    currencyName = base,
+                    selectedCurrency = base,
                     exchangeRateEntries = rates,
                     isFavorite = false
                 )
@@ -72,7 +72,6 @@ class CurrencyRepoImpl @Inject constructor(
     }
 
     override suspend fun removeFromFavorites(favoriteCurrencyPair: FavoriteCurrencyPair) {
-        Log.i("hehe","remove fav pair $favoriteCurrencyPair")
         dao.removeFavoritePair(favoriteCurrencyPair.symbol1, favoriteCurrencyPair.symbol2)
     }
 

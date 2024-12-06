@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.levp.currencytracker.data.local.CurrencyDatabase
 import com.levp.currencytracker.data.local.FavoriteCurrencyPair
 import com.levp.currencytracker.domain.CurrencyRepo
 import com.levp.currencytracker.domain.model.CurrencyQuote
@@ -17,8 +16,6 @@ import com.levp.currencytracker.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -48,7 +45,7 @@ class CurrencyViewModel @Inject constructor(
         repository.observeFavoriteQuotes()
             .map { list ->
                 list.filter {
-                    it.symbol1 == state.currencyQuote.currencyName
+                    it.symbol1 == state.currencyQuote.selectedCurrency.name
                 }
             }.collect { list ->
                 val checkList = list.map { it.copy(id = 0) }
@@ -73,21 +70,21 @@ class CurrencyViewModel @Inject constructor(
         symbol: SupportedSymbols
     ) {
         viewModelScope.launch {
-            repository.getLatestCurrencyQuotes(symbol.name).collect { result ->
+            repository.getLatestCurrencyQuotes(symbol).collect { result ->
                 when (result) {
                     is Resource.Error -> {
-                        Log.d("hehe", "network issue")
+                        //Log.d("hehe", "network issue")
                     }
 
                     is Resource.Loading -> {
-                        Log.i("hehe", "loading")
+                        //Log.i("hehe", "loading")
                         state = state.copy(
                             isLoading = result.isLoading
                         )
                     }
 
                     is Resource.Success -> {
-                        Log.i("hehe", "successs!!!!")
+                        //Log.i("hehe", "successs!!!!")
                         result.data?.let {
                             state = state.copy(
                                 currencyQuote = it
@@ -96,6 +93,17 @@ class CurrencyViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    fun onSwitchValueChange(symbol: SupportedSymbols) {
+        viewModelScope.launch {
+            state = state.copy(
+                currencyQuote = state.currencyQuote.copy(
+                    selectedCurrency = symbol
+                )
+            )
+            getCurrencyQuotes(symbol)
         }
     }
 
@@ -108,13 +116,19 @@ class CurrencyViewModel @Inject constructor(
     }
 
     fun addToFavorites(rateEntry: ExchangeRateEntry) = ioScope.launch {
-        Log.i("hehe","add favorite $rateEntry")
+        Log.i("hehe", "add favorite $rateEntry")
         repository.addToFavorites(FavoriteCurrencyPair(rateEntry.symbol1, rateEntry.symbol2, 0))
     }
 
     fun removeFromFavorites(rateEntry: ExchangeRateEntry) = ioScope.launch {
-        Log.i("hehe","remove favorite $rateEntry")
-        repository.removeFromFavorites(FavoriteCurrencyPair(rateEntry.symbol1, rateEntry.symbol2,0))
+        Log.i("hehe", "remove favorite $rateEntry")
+        repository.removeFromFavorites(
+            FavoriteCurrencyPair(
+                rateEntry.symbol1,
+                rateEntry.symbol2,
+                0
+            )
+        )
     }
 
     fun getFavoritesForSymbol(symbol: String) = ioScope.launch {

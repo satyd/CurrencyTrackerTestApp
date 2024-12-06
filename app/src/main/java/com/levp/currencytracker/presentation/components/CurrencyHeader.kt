@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
+import com.levp.currencytracker.domain.util.SupportedSymbols
 import com.levp.currencytracker.presentation.elements.CurrencySwitch
 import com.levp.currencytracker.presentation.elements.FilterButton
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
@@ -26,13 +27,16 @@ import com.levp.currencytracker.ui.theme.clHeaderBackground
 import com.levp.currencytracker.ui.theme.clText
 
 @Composable
-fun Header(
-    switchOnClick: () -> Unit,
+fun CurrencyHeader(
+    selectedCurrency: SupportedSymbols,
+    onValueChange: (SupportedSymbols) -> Unit,
     filterOnClick: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth().background(clHeaderBackground)) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .background(clHeaderBackground)) {
         Text(
-            text = stringResource(R.string.main_title),
+            text = stringResource(R.string.currencies_title),
             color = clText,
             style = TextStyle(
                 fontSize = 22.sp,
@@ -55,9 +59,9 @@ fun Header(
 
             ) {
             CurrencySwitch(
-                currencyName = "USD",
+                selectedCurrency = selectedCurrency,
                 modifier = Modifier.weight(1f),
-                switchOnClick = switchOnClick
+                onValueChange = onValueChange
             )
             Spacer(modifier = Modifier.width(8.dp))
             FilterButton {
@@ -68,11 +72,10 @@ fun Header(
 }
 
 
-
 @Preview(showBackground = true)
 @Composable
 fun HeaderPreview() {
     CurrencyTrackerTheme {
-        Header({}, {})
+        CurrencyHeader(SupportedSymbols.USD, {}, {})
     }
 }
