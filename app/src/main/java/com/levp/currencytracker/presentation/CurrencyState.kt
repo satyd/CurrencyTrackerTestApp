@@ -1,6 +1,6 @@
 package com.levp.currencytracker.presentation
 
-import com.levp.currencytracker.domain.CurrencyQuote
+import com.levp.currencytracker.domain.model.CurrencyQuote
 
 data class CurrencyState(
     val currencyQuote: CurrencyQuote = CurrencyQuote(),

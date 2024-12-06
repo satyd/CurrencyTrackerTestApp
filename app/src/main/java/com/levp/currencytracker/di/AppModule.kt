@@ -1,7 +1,10 @@
 package com.levp.currencytracker.di
 
 //import retrofit2.converter.moshi.MoshiConverterFactory
-import com.levp.currencytracker.data.networking.CurrencyApi
+import android.app.Application
+import androidx.room.Room
+import com.levp.currencytracker.data.local.CurrencyDatabase
+import com.levp.currencytracker.data.remote.CurrencyApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,15 +27,15 @@ object AppModule {
             .create()
     }
 
-    /*@Provides
+    @Provides
     @Singleton
-    fun provideStockDatabase(app: Application): StockDatabase {
+    fun provideCurrencyDatabase(app: Application): CurrencyDatabase {
         return Room.databaseBuilder(
             app,
-            StockDatabase::class.java,
-            "stock.db"
+            CurrencyDatabase::class.java,
+            "currency.db"
         ).build()
-    }*/
+    }
 
 
 }

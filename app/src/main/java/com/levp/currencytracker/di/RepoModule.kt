@@ -17,4 +17,5 @@ abstract class RepoModule {
     abstract fun bindCurrencyRepository(
         currencyRepoImpl: CurrencyRepoImpl
     ): CurrencyRepo
+
 }

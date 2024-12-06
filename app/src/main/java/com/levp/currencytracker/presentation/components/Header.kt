@@ -1,4 +1,4 @@
-package com.levp.currencytracker.presentation
+package com.levp.currencytracker.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
-import com.levp.currencytracker.presentation.components.CurrencySwitch
-import com.levp.currencytracker.presentation.components.FilterButton
+import com.levp.currencytracker.presentation.elements.CurrencySwitch
+import com.levp.currencytracker.presentation.elements.FilterButton
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
 import com.levp.currencytracker.ui.theme.clHeaderBackground
 import com.levp.currencytracker.ui.theme.clText

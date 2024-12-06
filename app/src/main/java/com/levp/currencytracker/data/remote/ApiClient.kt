@@ -1,4 +1,4 @@
-package com.levp.currencytracker.data.networking
+package com.levp.currencytracker.data.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

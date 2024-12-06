@@ -1,16 +1,17 @@
 package com.levp.currencytracker.data.repository
 
 import android.util.Log
-import com.levp.currencytracker.data.networking.CurrencyApi
-import com.levp.currencytracker.data.networking.QuoteDto
-import com.levp.currencytracker.data.networking.toExchangeRate
-import com.levp.currencytracker.domain.CurrencyQuote
+import com.levp.currencytracker.data.local.CurrencyDatabase
+import com.levp.currencytracker.data.local.FavoriteCurrencyPair
+import com.levp.currencytracker.data.remote.CurrencyApi
+import com.levp.currencytracker.data.remote.toExchangeRate
+import com.levp.currencytracker.data.util.parseJson
+import com.levp.currencytracker.domain.model.CurrencyQuote
 import com.levp.currencytracker.domain.CurrencyRepo
 import com.levp.currencytracker.domain.util.SupportedSymbols
 import com.levp.currencytracker.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.json.JSONObject
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -18,15 +19,18 @@ import javax.inject.Singleton
 
 @Singleton
 class CurrencyRepoImpl @Inject constructor(
-    private val currencyApi: CurrencyApi
+    private val currencyApi: CurrencyApi,
+    private val db: CurrencyDatabase,
 ) : CurrencyRepo {
+
+    val dao = db.dao
+
     override suspend fun getLatestCurrencyQuotes(base: String): Flow<Resource<CurrencyQuote>> {
         return flow {
             Log.i("hehe", "start flow for base = $base")
             val symbols = SupportedSymbols.entries.filter { it.name != base }.map { it.name }
             val symbolsStr = symbols.joinToString(",")
 
-            Log.i("hehe", "symbols = ${symbolsStr}")
             emit(Resource.Loading(true))
             val currencyQuotes = try {
                 val response = currencyApi.getLatestQuotesForSymbol(
@@ -34,15 +38,13 @@ class CurrencyRepoImpl @Inject constructor(
                     symbols = symbolsStr
                 )
 
-                //Log.d("hehe","response = ${response.string()}")
-                val rates = parseJson(response.string()).map { it.toExchangeRate() }
+                val rates = parseJson(base, response.string()).map { it.toExchangeRate() }
                 CurrencyQuote(
                     currencyName = base,
-                    exchangeRates = rates,
+                    exchangeRateEntries = rates,
                     isFavorite = false
                 )
 
-                //companyListingsParser.parse(response.byteStream())
             } catch (e: IOException) {
                 e.printStackTrace()
                 emit(Resource.Error("Couldn't load data"))
@@ -64,21 +66,26 @@ class CurrencyRepoImpl @Inject constructor(
 
         }
     }
-}
 
-fun parseJson(jsonString: String): MutableList<QuoteDto> {
-    val jsonObject = JSONObject(jsonString)
-    val ratesObject = jsonObject.getJSONObject("rates")
-    val keys = ratesObject.keys()
-    val result = mutableListOf<QuoteDto>()
-    while (keys.hasNext()) {
-        val key = keys.next() as String
-        val value = ratesObject.get(key).toString()
-        result.add(QuoteDto(currencyName = key, rate = value))
-
+    override suspend fun addToFavorites(favoriteCurrencyPair: FavoriteCurrencyPair) {
+        dao.insertFavoritePair(favoriteCurrencyPair)
     }
-    Log.w("hehe", "res = ${result}")
-    return result
+
+    override suspend fun removeFromFavorites(favoriteCurrencyPair: FavoriteCurrencyPair) {
+        Log.i("hehe","remove fav pair $favoriteCurrencyPair")
+        dao.removeFavoritePair(favoriteCurrencyPair.symbol1, favoriteCurrencyPair.symbol2)
+    }
+
+    override suspend fun getFavoriteQuotes(): List<FavoriteCurrencyPair> {
+        return dao.getAllFavorites()
+    }
+
+    override suspend fun getFavoriteQuotesForSymbol(symbol: String): List<FavoriteCurrencyPair> {
+        return dao.getFavoritesForSymbol(symbol)
+    }
+
+    override fun observeFavoriteQuotes(): Flow<List<FavoriteCurrencyPair>> {
+        return dao.observeFavorites()
+    }
+
 }
-
-

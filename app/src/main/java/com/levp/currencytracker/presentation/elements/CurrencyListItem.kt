@@ -1,4 +1,4 @@
-package com.levp.currencytracker.presentation.components
+package com.levp.currencytracker.presentation.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
+import com.levp.currencytracker.domain.model.ExchangeRateEntry
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
 import com.levp.currencytracker.ui.theme.clListItemBackground
 import com.levp.currencytracker.ui.theme.clText
@@ -34,9 +35,8 @@ import com.levp.currencytracker.ui.theme.clText
 //prob fix text color
 @Composable
 fun CurrencyListItem(
-    currencyName: String,
-    exchangeRate: String,
-    isFavorite: Boolean,
+    rateEntry: ExchangeRateEntry,
+    onFavoriteClick: (ExchangeRateEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -49,7 +49,7 @@ fun CurrencyListItem(
             .padding(start = 16.dp, end = 16.dp),
     ) {
         Text(
-            text = currencyName,
+            text = rateEntry.symbol2,
             style = TextStyle(
                 color = clText,
                 fontSize = 14.sp,
@@ -59,7 +59,7 @@ fun CurrencyListItem(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = exchangeRate,
+                text = rateEntry.rate.toString(),
                 style = TextStyle(
                     color = clText,
                     fontSize = 16.sp,
@@ -68,11 +68,11 @@ fun CurrencyListItem(
                 )
             )
             Spacer(modifier = Modifier.width(16.dp))
-            if (isFavorite) {
+            if (rateEntry.isFavorite) {
                 IconButton(modifier = Modifier
                     .padding(0.dp)
                     .size(24.dp),
-                    onClick = {}
+                    onClick = {onFavoriteClick(rateEntry)}
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.favorites_on),
@@ -84,7 +84,7 @@ fun CurrencyListItem(
                 IconButton(modifier = Modifier
                     .padding(0.dp)
                     .size(24.dp),
-                    onClick = {}
+                    onClick = {onFavoriteClick(rateEntry)}
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.favorites_off),
@@ -102,9 +102,8 @@ fun CurrencyListItem(
 fun CurrencyListItemPreview() {
     CurrencyTrackerTheme {
         CurrencyListItem(
-            currencyName = "USD",
-            exchangeRate = "2.23674",
-            isFavorite = true
+            rateEntry = ExchangeRateEntry("USD", "EUR", 0.95),
+            {}
         )
     }
 }

@@ -1,4 +1,4 @@
-package com.levp.currencytracker.presentation.components
+package com.levp.currencytracker.presentation.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

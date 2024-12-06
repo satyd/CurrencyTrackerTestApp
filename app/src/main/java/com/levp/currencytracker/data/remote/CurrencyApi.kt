@@ -1,4 +1,4 @@
-package com.levp.currencytracker.data.networking
+package com.levp.currencytracker.data.remote
 
 import okhttp3.ResponseBody
 import retrofit2.http.GET
