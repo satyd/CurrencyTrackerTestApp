@@ -1,7 +1,7 @@
 package com.levp.currencytracker.domain
 
 data class CurrencyQuote(
-    val currencyName: String,
-    val quote: Double,
-    val isFavorite: Boolean
+    val currencyName: String = "",
+    val exchangeRates: List<ExchangeRate> = emptyList(),
+    val isFavorite: Boolean = false
 )

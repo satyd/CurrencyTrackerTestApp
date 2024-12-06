@@ -46,6 +46,7 @@ dependencies {
     //added
     implementation(libs.retrofit2.retrofit)
     implementation(libs.retrofit2.converter.gson)
+    implementation(libs.squareup.converter.moshi)
 
 
     implementation(libs.hilt.android)

@@ -1,5 +1,6 @@
 package com.levp.currencytracker.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,20 +22,23 @@ import com.levp.currencytracker.R
 import com.levp.currencytracker.presentation.components.CurrencySwitch
 import com.levp.currencytracker.presentation.components.FilterButton
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
+import com.levp.currencytracker.ui.theme.clHeaderBackground
+import com.levp.currencytracker.ui.theme.clText
 
 @Composable
 fun Header(
     switchOnClick: () -> Unit,
     filterOnClick: () -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxWidth().background(clHeaderBackground)) {
         Text(
-            modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 10.dp),
             text = stringResource(R.string.main_title),
+            color = clText,
             style = TextStyle(
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
-            )
+            ),
+            modifier = Modifier.padding(start = 16.dp, top = 10.dp, bottom = 10.dp),
         )
         //Spacer(modifier = Modifier.height(10.dp))
         Row(

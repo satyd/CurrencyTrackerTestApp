@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
 import com.levp.currencytracker.ui.theme.clListItemBackground
+import com.levp.currencytracker.ui.theme.clText
 
 //hehe fix font and favorite icon, add onclick
 //prob fix text color
@@ -50,6 +51,7 @@ fun CurrencyListItem(
         Text(
             text = currencyName,
             style = TextStyle(
+                color = clText,
                 fontSize = 14.sp,
                 fontFamily = FontFamily.Monospace
             )
@@ -59,6 +61,7 @@ fun CurrencyListItem(
             Text(
                 text = exchangeRate,
                 style = TextStyle(
+                    color = clText,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FontFamily.Monospace

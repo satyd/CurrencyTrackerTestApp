@@ -7,6 +7,6 @@ interface CurrencyRepo {
 
     suspend fun getLatestCurrencyQuotes(
         symbol:String
-    ): Flow<Resource<List<CurrencyQuote>>>
+    ): Flow<Resource<CurrencyQuote>>
 
 }
