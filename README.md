@@ -8,6 +8,7 @@
 
 ## Используемые ресурсы
 - https://api.apilayer.com/exchangerates_data
+- https://apilayer.com/marketplace/exchangerates_data-api
 
 ## Используемые библиотеки
 - Retrofit
