@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +20,7 @@ import com.levp.currencytracker.presentation.CurrencyState
 import com.levp.currencytracker.presentation.CurrencyViewModel
 import com.levp.currencytracker.presentation.components.CurrencyHeader
 import com.levp.currencytracker.presentation.elements.CurrencyListItem
+import com.levp.currencytracker.presentation.elements.SimpleDivider
 import com.levp.currencytracker.ui.theme.clDivider
 import com.levp.currencytracker.ui.theme.clMainBackground
 
@@ -40,11 +42,7 @@ fun CurrencyTab(
             onValueChange = viewModel::onSwitchValueChange,
             filterOnClick = onFilterBtnClick,
         )
-        Spacer(
-            modifier = Modifier
-                .height(1.dp)
-                .background(color = clDivider)
-        )
+        SimpleDivider()
         if (state.isLoading) {
             Box(
                 contentAlignment = Alignment.Center,
@@ -78,10 +76,6 @@ fun CurrencyTab(
                 }
             }
         }
-        Spacer(
-            modifier = Modifier
-                .height(1.dp)
-                .background(color = clDivider)
-        )
+        SimpleDivider()
     }
 }

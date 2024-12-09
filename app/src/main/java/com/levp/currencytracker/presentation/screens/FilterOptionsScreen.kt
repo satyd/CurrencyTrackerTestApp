@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -33,6 +30,7 @@ import androidx.navigation.NavController
 import com.levp.currencytracker.domain.util.SortingOptions
 import com.levp.currencytracker.presentation.components.FilterOptionsHeader
 import com.levp.currencytracker.presentation.elements.FilterListItem
+import com.levp.currencytracker.presentation.elements.SimpleDivider
 import com.levp.currencytracker.ui.theme.clButton
 import com.levp.currencytracker.ui.theme.clDivider
 import com.levp.currencytracker.ui.theme.clMainBackground
@@ -54,11 +52,7 @@ fun FilterOptionsScreen(
             .background(color = clMainBackground)
     ) {
         FilterOptionsHeader(onBack = { navController.popBackStack() })
-        Spacer(
-            modifier = Modifier
-                .height(1.dp)
-                .background(color = clDivider)
-        )
+        SimpleDivider()
         Text(
             text = "SORT BY", style = TextStyle(
                 color = clTextDescription,

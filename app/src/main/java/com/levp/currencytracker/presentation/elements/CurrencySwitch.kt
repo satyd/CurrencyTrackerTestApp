@@ -52,6 +52,9 @@ fun CurrencySwitch(
     val options = SupportedSymbols.entries
     var expanded by remember { mutableStateOf(false) }
 
+    //heheh нужно чтобы списочек сливался с кнопкой
+    //в прямоугольничек с общим контуром
+
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
@@ -97,7 +100,8 @@ fun CurrencySwitch(
                 disabledIndicatorColor = clMainBackground,
                 focusedIndicatorColor = clMainBackground,
                 focusedContainerColor = clMainBackground,
-                unfocusedContainerColor = clMainBackground
+                unfocusedContainerColor = clMainBackground,
+
             )
         )
         ExposedDropdownMenu(

@@ -2,6 +2,7 @@ package com.levp.currencytracker.presentation.util
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -19,6 +20,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import com.levp.currencytracker.presentation.elements.SimpleDivider
 import com.levp.currencytracker.ui.theme.clMainBackground
 import com.levp.currencytracker.ui.theme.clSelectedItem
 import com.levp.currencytracker.ui.theme.clText
@@ -60,50 +62,53 @@ fun TabView(
         mutableIntStateOf(0)
     }
 
-    NavigationBar(
-        modifier = Modifier
-            .background(color = clMainBackground)
-            .fillMaxWidth(),
-        containerColor = clMainBackground
-    ) {
-        tabBarItems.forEachIndexed { index, tabBarItem ->
-            val isSelected = selectedTabIndex == index
-            val textColor = if (isSelected) clText else clTextUnselected
+    Column(modifier = Modifier.fillMaxWidth()) {
+        SimpleDivider()
+        NavigationBar(
+            modifier = Modifier
+                .background(color = clMainBackground)
+                .fillMaxWidth(),
+            containerColor = clMainBackground
+        ) {
+            tabBarItems.forEachIndexed { index, tabBarItem ->
+                val isSelected = selectedTabIndex == index
+                val textColor = if (isSelected) clText else clTextUnselected
 
-            NavigationBarItem(
-                modifier = Modifier.background(color = clMainBackground),
-                selected = isSelected,
-                onClick = {
-                    selectedTabIndex = index
-                    navController.navigate(tabBarItem.destination) {
-                        popUpTo(navController.graph.findStartDestination().id) {
-                            saveState = true
+                NavigationBarItem(
+                    modifier = Modifier.background(color = clMainBackground),
+                    selected = isSelected,
+                    onClick = {
+                        selectedTabIndex = index
+                        navController.navigate(tabBarItem.destination) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                },
-                icon = {
-                    TabBarIconView(
-                        isSelected = isSelected,
-                        selectedIcon = tabBarItem.selectedIcon,
-                        unselectedIcon = tabBarItem.unselectedIcon,
-                        title = tabBarItem.title,
-                    )
-                },
-                label = {
-                    Text(
-                        text = tabBarItem.title,
-                        style = TextStyle(
-                            color = textColor
+                    },
+                    icon = {
+                        TabBarIconView(
+                            isSelected = isSelected,
+                            selectedIcon = tabBarItem.selectedIcon,
+                            unselectedIcon = tabBarItem.unselectedIcon,
+                            title = tabBarItem.title,
                         )
+                    },
+                    label = {
+                        Text(
+                            text = tabBarItem.title,
+                            style = TextStyle(
+                                color = textColor
+                            )
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(
+                        indicatorColor = clSelectedItem,
+                        unselectedIconColor = clMainBackground
                     )
-                },
-                colors = NavigationBarItemDefaults.colors(
-                    indicatorColor = clSelectedItem,
-                    unselectedIconColor = clMainBackground
                 )
-            )
+            }
         }
     }
 }

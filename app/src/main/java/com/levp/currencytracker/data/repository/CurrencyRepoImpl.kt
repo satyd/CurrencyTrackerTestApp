@@ -79,7 +79,7 @@ class CurrencyRepoImpl @Inject constructor(
             map.entries.forEach {
                 val base = it.key
                 val symbolsStr = it.value.joinToString(",")
-                Log.i("hehe","load data for ${base}, values = [$symbolsStr]")
+                //Log.i("hehe","load data for ${base}, values = [$symbolsStr]")
 
                 //emit(Resource.Loading(true))
                 val favExchangeRates = try {
@@ -90,9 +90,9 @@ class CurrencyRepoImpl @Inject constructor(
                     ).string()*/
                     // это для фейковых в точности повторяющих апишные данных
                     val response = getFakeFavExchangeRatesResponse(base = base, symbols = symbolsStr)
-                    Log.d("hehe","responseFavs = $response")
+                    //Log.d("hehe","responseFavs = $response")
                     val rates = parseJson(base, response).map { quote -> quote.toFavExchangeRate() }
-                    Log.v("hehe","received rates = $rates")
+                    //Log.v("hehe","received rates = $rates")
                     rates
                 } catch (e: IOException) {
                     e.printStackTrace()

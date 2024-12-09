@@ -16,6 +16,7 @@ import com.levp.currencytracker.presentation.CurrencyState
 import com.levp.currencytracker.presentation.CurrencyViewModel
 import com.levp.currencytracker.presentation.components.FavoritesHeader
 import com.levp.currencytracker.presentation.elements.CurrencyListItem
+import com.levp.currencytracker.presentation.elements.SimpleDivider
 import com.levp.currencytracker.ui.theme.clDivider
 import com.levp.currencytracker.ui.theme.clMainBackground
 
@@ -32,11 +33,7 @@ fun FavoritesTab(
             .background(color = clMainBackground)
     ) {
         FavoritesHeader()
-        Spacer(
-            modifier = Modifier
-                .height(1.dp)
-                .background(color = clDivider)
-        )
+        SimpleDivider()
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -60,5 +57,6 @@ fun FavoritesTab(
                 }
             }
         }
+        SimpleDivider()
     }
 }

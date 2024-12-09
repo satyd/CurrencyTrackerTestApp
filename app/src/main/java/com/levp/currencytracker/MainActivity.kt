@@ -102,7 +102,6 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Screens.Favorites.route
                         ) {
-                            //hehe favorites add request for pairs
                             FavoritesTab(
                                 innerPadding = innerPadding,
                                 state = state,

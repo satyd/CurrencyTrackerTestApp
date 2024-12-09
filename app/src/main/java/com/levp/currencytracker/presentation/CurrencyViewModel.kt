@@ -43,7 +43,7 @@ class CurrencyViewModel @Inject constructor(
 
     var state by mutableStateOf(CurrencyState())
 
-    //в идеале ещё отправлять избранные вверх списка
+    //в идеале можно отправлять избранные вверх списка
     fun observeFavoritePairs() = ioScope.launch {
         //в более сложных случаях лучше собирать потоки через combine
         repository.observeFavoriteQuotes()
@@ -187,15 +187,14 @@ class CurrencyViewModel @Inject constructor(
             keySelector = { it.symbol1 },
             valueTransform = { it.symbol2 }
         )
-        // Здесь нужнен запрос на сервер для получения актуальных курсов
-        // для набора symbol1: { symbol0..symbolN } из списка
-        // но у апишки всего 100 запросов в месяц
+        // Здесь выполняется тот же запрос на сервер для получения актуальных курсов
+        // только для каждого набора symbol1: { symbol0..symbolN } из списка
+        // но у апишки всего 100 запросов в месяц, поэтому данные фейковые использую
+
         withContext(viewModelScope.coroutineContext) {
             repository.getFavoriteCurrencyQuotes(map = map).collect { result ->
                 when (result) {
-                    is Resource.Error -> {
-                       Log.d("hehe", "network issue")
-                    }
+                    is Resource.Error -> { Log.d("hehe", "network issue") }
                     is Resource.Loading -> { Log.v("hehe","loadin") }
                     is Resource.Success -> {
                         Log.i("hehe","success")
