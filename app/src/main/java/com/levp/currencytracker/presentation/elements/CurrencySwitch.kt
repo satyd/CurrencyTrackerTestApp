@@ -3,9 +3,11 @@ package com.levp.currencytracker.presentation.elements
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenuItem
@@ -49,7 +51,6 @@ fun CurrencySwitch(
     val shape = RoundedCornerShape(8.dp)
     val options = SupportedSymbols.entries
     var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(selectedCurrency.name) }
 
     ExposedDropdownMenuBox(
         expanded = expanded,
@@ -63,10 +64,17 @@ fun CurrencySwitch(
                 .menuAnchor()
                 .border(width = 1.dp, color = clMainSecondary, shape = shape)
                 .height(48.dp)
+                .padding(0.dp)
                 .fillMaxWidth()
                 .background(color = clMainBackground, shape = shape),
             readOnly = true,
-            singleLine = true,
+            textStyle = TextStyle(
+                color = clText,
+                lineHeight = 20.sp,
+                fontSize = 14.sp,
+                fontWeight = FontWeight(500)
+            ),
+            supportingText = null,
             value = selectedCurrency.name,
             onValueChange = { },
             trailingIcon = {
@@ -85,6 +93,9 @@ fun CurrencySwitch(
                 }
             },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
+                unfocusedIndicatorColor = clMainBackground,
+                disabledIndicatorColor = clMainBackground,
+                focusedIndicatorColor = clMainBackground,
                 focusedContainerColor = clMainBackground,
                 unfocusedContainerColor = clMainBackground
             )
@@ -109,7 +120,6 @@ fun CurrencySwitch(
                     onClick = {
                         Log.d("hehe", "update data for $selectionOption")
                         onValueChange(selectionOption)
-                        //selectedOptionText = selectionOption.name
                         expanded = false
                     },
                     text = {

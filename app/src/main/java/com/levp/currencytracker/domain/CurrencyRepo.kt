@@ -1,7 +1,8 @@
 package com.levp.currencytracker.domain
 
 import com.levp.currencytracker.data.local.FavoriteCurrencyPair
-import com.levp.currencytracker.domain.model.CurrencyQuote
+import com.levp.currencytracker.data.remote.CurrencyQuote
+import com.levp.currencytracker.domain.model.ExchangeRateEntry
 import com.levp.currencytracker.domain.util.SupportedSymbols
 import com.levp.currencytracker.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -9,8 +10,12 @@ import kotlinx.coroutines.flow.Flow
 interface CurrencyRepo {
 
     suspend fun getLatestCurrencyQuotes(
-        symbol: SupportedSymbols
+        baseSymbol: SupportedSymbols
     ): Flow<Resource<CurrencyQuote>>
+
+    suspend fun getFavoriteCurrencyQuotes(
+        map: Map<String, List<String>>
+    ): Flow<Resource<List<ExchangeRateEntry>>>
 
     suspend fun addToFavorites(
         favoriteCurrencyPair: FavoriteCurrencyPair

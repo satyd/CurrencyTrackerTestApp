@@ -13,3 +13,10 @@ fun QuoteDto.toExchangeRate() = ExchangeRateEntry(
     symbol2 = currencyName2,
     rate = rate.toDoubleOrNull() ?: 0.0
 )
+
+fun QuoteDto.toFavExchangeRate() = ExchangeRateEntry(
+    symbol1 = currencyName1,
+    symbol2 = currencyName2,
+    isFavorite = true,
+    rate = rate.toDoubleOrNull() ?: 0.0
+)

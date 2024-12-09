@@ -1,9 +1,12 @@
 package com.levp.currencytracker.presentation
 
-import com.levp.currencytracker.domain.model.CurrencyQuote
+import com.levp.currencytracker.domain.model.ExchangeRateEntry
+import com.levp.currencytracker.domain.util.SupportedSymbols
 
 data class CurrencyState(
-    val currencyQuote: CurrencyQuote = CurrencyQuote(),
+    val selectedCurrency: SupportedSymbols = SupportedSymbols.USD,
+    val exchangeRateEntries: List<ExchangeRateEntry> = emptyList(),
+    val favoriteExchangeRates: List<ExchangeRateEntry> = emptyList(),
     val isLoading: Boolean = false,
-    val filter: String = "" //hehe
+    val selectedFilter: Int = 0 //hehe
 )

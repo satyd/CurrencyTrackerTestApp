@@ -36,9 +36,16 @@ import com.levp.currencytracker.ui.theme.clText
 @Composable
 fun CurrencyListItem(
     rateEntry: ExchangeRateEntry,
+    isFavoritesTab: Boolean = false,
     onFavoriteClick: (ExchangeRateEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val text = if(isFavoritesTab) {
+        "${rateEntry.symbol1}/${rateEntry.symbol2}"
+    } else {
+        rateEntry.symbol2
+    }
+
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -49,7 +56,7 @@ fun CurrencyListItem(
             .padding(start = 16.dp, end = 16.dp),
     ) {
         Text(
-            text = rateEntry.symbol2,
+            text = text,
             style = TextStyle(
                 color = clText,
                 fontSize = 14.sp,
@@ -103,6 +110,7 @@ fun CurrencyListItemPreview() {
     CurrencyTrackerTheme {
         CurrencyListItem(
             rateEntry = ExchangeRateEntry("USD", "EUR", 0.95),
+            isFavoritesTab = true,
             {}
         )
     }

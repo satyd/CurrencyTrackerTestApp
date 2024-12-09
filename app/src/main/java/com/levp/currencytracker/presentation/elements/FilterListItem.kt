@@ -2,6 +2,7 @@ package com.levp.currencytracker.presentation.elements
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,24 +23,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.levp.currencytracker.R
 import com.levp.currencytracker.ui.theme.CurrencyTrackerTheme
 import com.levp.currencytracker.ui.theme.clMainBackground
+import com.levp.currencytracker.ui.theme.clText
 
-//hehe fix
 @Composable
 fun FilterListItem(
     filterName: String,
     isSelected: Boolean,
+    onClick:() -> Unit,
     modifier: Modifier = Modifier
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .clickable { onClick() }
             .height(48.dp)
             .fillMaxWidth()
             .border(width = 0.dp, shape = RectangleShape, color = Color.Unspecified)
@@ -49,8 +53,11 @@ fun FilterListItem(
         Text(
             text = filterName,
             style = TextStyle(
+                color = clText,
                 fontSize = 14.sp,
-                fontFamily = FontFamily.Monospace
+                lineHeight = 20.sp,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight(500)
             )
         )
             if (isSelected) {
@@ -69,7 +76,7 @@ fun FilterListItem(
                 IconButton(modifier = Modifier
                     .padding(0.dp)
                     .size(24.dp),
-                    onClick = {}
+                    onClick = { onClick() }
                 ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(R.drawable.ic_unselected),
@@ -89,11 +96,13 @@ fun FilterListItemPreview() {
         Column {
             FilterListItem(
                 filterName = "Code A-Z",
-                isSelected = true
+                isSelected = true,
+                {}
             )
             FilterListItem(
                 filterName = "Quote Asc.",
-                isSelected = false
+                isSelected = false,
+                {}
             )
             Spacer(modifier = Modifier.size(4.dp))
         }
